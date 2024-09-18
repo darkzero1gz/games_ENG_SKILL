@@ -31,11 +31,19 @@ int main() {
         if (choice == 4) break;
 
         string mode;
-        if (choice == 1) mode = "Present Simple";
-        else if (choice == 2) mode = "Past Simple";
-        else if (choice == 3) mode = "Future Simple";
-        else {
-            cout << "Invalid choice, please select again.\n";
+        if (choice == 4) break;
+        switch (choice)
+        {
+        case 1:
+            mode = "Present Simple";
+            
+        case 2:
+            mode = "Present Simple";
+            
+        case 3:
+            mode = "Present Simple";
+            
+        default:cout << "Invalid choice, please select again.\n";
             continue;
         }
 
