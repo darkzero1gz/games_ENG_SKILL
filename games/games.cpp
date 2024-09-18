@@ -94,7 +94,7 @@ int startGame(string mode) {
         score += askQuestion("Which is the correct question form: '___ she go to school every day?'", { "Do", "Does", "Is" }, 2);
         score += fillInTheBlanks("They _____ (not go) to school on Sundays.", "do not go");
         score += askQuestion("My dad ___ English with me.", { "Speak", "Speaks", "speaked" }, 2);
-        score += askQuestion("Choose the correct sentence: 'She _ to the market every week.'", { "go", "goes", "gone" }, 2);
+        score += askQuestion("Choose the correct verb in 'She ___ to the market every week.'", { "go", "goes", "gone" }, 2);
         score += fillInTheBlanks("I ___ (eat) breakfast at 7 a.m. every day.", "eat");
         return score;
     }
