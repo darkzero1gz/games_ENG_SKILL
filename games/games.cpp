@@ -2,6 +2,8 @@
 #include <ctime>
 #include <vector>
 #include <string>
+#include <algorithm>
+
 using namespace std;
 
 struct Player {
@@ -10,6 +12,7 @@ struct Player {
     double timeTaken;
 };
 
+// Function declarations
 vector<Player> highScores;
 
 void displayMenu();
@@ -18,6 +21,7 @@ int askQuestion(string question, vector<string> choices, int correctAnswer);
 int fillInTheBlanks(string question, string correctAnswer);
 void showHighScores();
 double calculateTime(clock_t start, clock_t end);
+void updateHighScores(Player player);
 
 int main() {
     string name;
@@ -31,11 +35,19 @@ int main() {
         if (choice == 4) break;
 
         string mode;
-        if (choice == 1) mode = "Present Simple";
-        else if (choice == 2) mode = "Past Simple";
-        else if (choice == 3) mode = "Future Simple";
-        else {
-            cout << "Invalid choice, please select again.\n";
+        switch (choice)
+        {
+        case 1:
+            mode = "Present Simple";
+            break;
+        case 2:
+            mode = "Past Simple";
+            break;
+        case 3:
+            mode = "Future Simple";
+            break;
+        default:cout << "Invalid choice, please select again.\n";
+            break;
             continue;
         }
 
@@ -45,14 +57,14 @@ int main() {
 
         double timeTaken = calculateTime(start, end);
 
-        // Store player details
+        // Create a new player object
         Player player;
         player.name = name;
         player.score = score;
         player.timeTaken = timeTaken;
 
-        // Add to highScores list
-        highScores.push_back(player);
+        // Update the high score list with the new player
+        updateHighScores(player);
 
         // Show the player's score
         cout << "Your score is: " << player.score << endl;
@@ -77,20 +89,20 @@ int startGame(string mode) {
 
     // Example questions for Present Simple
     if (mode == "Present Simple") {
-        score += askQuestion("What is the correct form of the verb in 'He ___ every day.'", { "runs", "run", "ran" }, 1);
-        score += fillInTheBlanks("He _____ (play) football every day.", "plays");
+        score += askQuestion("What is the correct form of the verb in 'He _ every day.'", { "runs", "run", "ran" }, 1);
+        score += fillInTheBlanks("He ___ (play) football every day.", "plays");
     }
 
     // Example questions for Past Simple
     else if (mode == "Past Simple") {
         score += askQuestion("What is the past form of 'go'?", { "goes", "went", "gone" }, 2);
-        score += fillInTheBlanks("He _____ (go) to the park yesterday.", "went");
+        score += fillInTheBlanks("He ___ (go) to the park yesterday.", "went");
     }
 
     // Example questions for Future Simple
     else if (mode == "Future Simple") {
         score += askQuestion("Which one is Future Simple?", { "will go", "goes", "went" }, 1);
-        score += fillInTheBlanks("He _____ (go) to the park tomorrow.", "will go");
+        score += fillInTheBlanks("He ___ (go) to the park tomorrow.", "will go");
     }
 
     return score; // Return the total score
@@ -103,7 +115,7 @@ int askQuestion(string question, vector<string> choices, int correctAnswer) {
     }
 
     int answer;
-    cout << "Your choice: ";
+    cout << "Your answer: ";
     cin >> answer;
 
     if (answer == correctAnswer) {
@@ -142,4 +154,33 @@ void showHighScores() {
 
 double calculateTime(clock_t start, clock_t end) {
     return double(end - start) / CLOCKS_PER_SEC;
+}
+
+void updateHighScores(Player player) {
+    bool updated = false;
+
+    for (auto& highScorePlayer : highScores) {
+        if (highScorePlayer.name == player.name) {
+            // If the player already exists, update if the score is higher or time is lower
+            if (player.score > highScorePlayer.score) {
+                highScorePlayer = player;
+            } else if (player.score == highScorePlayer.score && player.timeTaken < highScorePlayer.timeTaken) {
+                highScorePlayer.timeTaken = player.timeTaken;
+            }
+            updated = true;
+            break;
+        }
+    }
+
+    if (!updated) {
+        // If player does not exist in the high score list, add the player
+        highScores.push_back(player);
+    }
+
+    // Sort the high scores in descending order by score, and by time in ascending order for ties
+    sort(highScores.begin(), highScores.end(), [](Player a, Player b) {
+        if (a.score == b.score)
+            return a.timeTaken < b.timeTaken;
+        return a.score > b.score;
+    });
 }
