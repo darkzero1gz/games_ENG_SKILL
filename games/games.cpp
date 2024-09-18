@@ -46,8 +46,8 @@ int main() {
         case 3:
             mode = "Future Simple";
             break;
-        default:cout << "Invalid choice, please select again.\n";
-            break;
+        default:
+            cout << "Invalid choice, please select again.\n";
             continue;
         }
 
@@ -87,22 +87,40 @@ void displayMenu() {
 int startGame(string mode) {
     int score = 0;
 
-    // Example questions for Present Simple
+    // Questions for Present Simple
     if (mode == "Present Simple") {
         score += askQuestion("What is the correct form of the verb in 'He _ every day.'", { "runs", "run", "ran" }, 1);
         score += fillInTheBlanks("He ___ (play) football every day.", "plays");
+        score += askQuestion("Which is the correct question form: '___ she go to school every day?'", { "Do", "Does", "Is" }, 2);
+        score += fillInTheBlanks("They _____ (not go) to school on Sundays.", "do not go");
+        score += askQuestion("My dad ___ English with me.", { "Speak", "Speaks", "speaked" }, 2);
+        score += askQuestion("Choose the correct sentence: 'She _ to the market every week.'", { "go", "goes", "gone" }, 2);
+        score += fillInTheBlanks("I ___ (eat) breakfast at 7 a.m. every day.", "eat");
+        return score;
     }
 
-    // Example questions for Past Simple
+    // Questions for Past Simple
     else if (mode == "Past Simple") {
         score += askQuestion("What is the past form of 'go'?", { "goes", "went", "gone" }, 2);
         score += fillInTheBlanks("He ___ (go) to the park yesterday.", "went");
+        score += askQuestion("What is the correct past form in 'She _ to the store.'", { "goed", "went", "goes" }, 2);
+        score += fillInTheBlanks("They _____ (not see) the movie last week.", "did not see");
+        score += askQuestion("What did they ___ yesterday?", { "do", "did", "done" }, 1);
+        score += askQuestion("Choose the correct past tense form: 'He _ the book last night.'", { "reads", "read", "reading" }, 2);
+        score += fillInTheBlanks("She ___ (meet) her friend last Friday.", "met");
+        return score;
     }
 
-    // Example questions for Future Simple
+    // Questions for Future Simple
     else if (mode == "Future Simple") {
         score += askQuestion("Which one is Future Simple?", { "will go", "goes", "went" }, 1);
         score += fillInTheBlanks("He ___ (go) to the park tomorrow.", "will go");
+        score += askQuestion("What is the correct future form of 'She ___ a party next week.'", { "will have", "has", "had" }, 1);
+        score += fillInTheBlanks("They _____ (not go) to school tomorrow.", "will not go");
+        score += askQuestion("Will they ___ to the concert?", { "go", "went", "going" }, 1);
+        score += askQuestion("Choose the correct future tense form: 'I _ my homework later.'", { "do", "did", "will do" }, 3);
+        score += fillInTheBlanks("We ___ (travel) to Paris next summer.", "will travel");
+        return score;
     }
 
     return score; // Return the total score
@@ -132,7 +150,8 @@ int fillInTheBlanks(string question, string correctAnswer) {
     cout << question << endl;
     string answer;
     cout << "Your answer: ";
-    cin >> answer;
+    cin.ignore(); // Clear the newline left in the buffer
+    getline(cin, answer); // Use getline to handle spaces in answers
 
     if (answer == correctAnswer) {
         cout << "Correct!\n";
