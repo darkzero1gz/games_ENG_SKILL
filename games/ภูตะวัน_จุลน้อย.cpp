@@ -9,17 +9,17 @@ int main()
     string name;
     cout << endl;
     system("CLS");
-	cout << " ----------------------------------------" << endl;
-	cout << "         Program Calculate Grade         " << endl;
-	cout << " ----------------------------------------" << endl;
+    cout << " ----------------------------------------" << endl;
+    cout << "         Program Calculate Grade         " << endl;
+    cout << " ----------------------------------------" << endl;
     cout << endl;
-	cout << "Please enter your name : ";
-	getline(cin,name);
-	cout << endl;
+    cout << "Please enter your name : ";
+    getline(cin, name);
+    cout << endl;
     while (true)
     {
         cout << "Enter midterm score (0 - 30 Point) : ";
-        cin >>midterm;
+        cin >> midterm;
         cout << endl;
         if (midterm < 0 || midterm > 30)
         {
@@ -43,29 +43,29 @@ int main()
     while (true)
     {
 
-         cout << "Enter homework score (0 - 15 Point) : ";
-         cin >> homework;
-         cout << endl;
-         if (homework < 0 || homework > 15)
-         {
-             cout << "The score entered is incorrect. Plesase enter score (0 - 15 Point)" << endl;
-             continue;
-         }
-         break;
+        cout << "Enter homework score (0 - 15 Point) : ";
+        cin >> homework;
+        cout << endl;
+        if (homework < 0 || homework > 15)
+        {
+            cout << "The score entered is incorrect. Plesase enter score (0 - 15 Point)" << endl;
+            continue;
+        }
+        break;
     }
-    
+
     while (true)
     {
 
-         cout << "Enter affective score (0 - 10 Point) : ";
-         cin >> classroom;
-         cout << endl;
-         if (classroom < 0 || classroom > 10)
-         {
-             cout << "The score entered is incorrect. Plesase enter score (0 - 10 Point)" << endl;
-             continue;
-         }
-         break;
+        cout << "Enter affective score (0 - 10 Point) : ";
+        cin >> classroom;
+        cout << endl;
+        if (classroom < 0 || classroom > 10)
+        {
+            cout << "The score entered is incorrect. Plesase enter score (0 - 10 Point)" << endl;
+            continue;
+        }
+        break;
     }
 
     while (true)
@@ -82,21 +82,20 @@ int main()
         break;
     }
     while (true)
-    { 
-         if (score > 100)
-         {
-             cout << "!!! score exceeds 100. Please enter valid score again. !!!" << endl;
-             continue;
-         }
-         break;
-     }
-    int scoref = calscore( midterm,  final,  homework,  assingnment,  classroom);
-    string grade = calculatetotalscore(score);
-	
+    {
+        if (score > 100)
+        {
+            cout << "!!! score exceeds 100. Please enter valid score again. !!!" << endl;
+            continue;
+        }
+        break;
+    }
+    int scoref = calscore(midterm, final, homework, assingnment, classroom);
+    string grade = calculatetotalscore(scoref);
+
     cout << "Your total score is " << scoref << endl;
     cout << endl;
-    cout <<"Your grade is " << grade << endl;
-    
+    cout << "Your grade is " << grade << endl;
 }
 
 int calscore(int midterm, int final, int homework, int assingnment, int classroom)
@@ -107,39 +106,39 @@ int calscore(int midterm, int final, int homework, int assingnment, int classroo
 
 string calculatetotalscore(int sum)
 {
-   
+
     string grade;
 
-     if (sum >= 55 && sum <= 59)
-    {
-        grade = "D";
-    }
-    else if (sum >= 60 && sum <= 64)
-    {
-        grade = "D+";
-    }
-
-    else if (sum >= 65 && sum <= 69)
-    {
-        grade = "C";
-    }
-    else if (sum >= 70 && sum <= 74)
-    {
-        grade = "C+";
-    }
-    else if (sum >= 75 && sum <= 79)
-    {
-        grade = "B";
-    }
-    else if (sum >= 80 && sum <= 84)
-    {
-        grade = "B+";
-    }
-    else if (sum >= 80 && sum <= 89)
+    if (sum >= 80)
     {
         grade = "A";
     }
-    else if (sum >= 0 && sum < 50 )
+    else if (sum >= 75)
+    {
+        grade = "B+";
+    }
+
+    else if (sum >= 70)
+    {
+        grade = "B";
+    }
+    else if (sum >= 65)
+    {
+        grade = "C+";
+    }
+    else if (sum >= 60)
+    {
+        grade = "C";
+    }
+    else if (sum >= 55)
+    {
+        grade = "D+";
+    }
+    else if (sum >= 50)
+    {
+        grade = "D";
+    }
+    else if (sum >= 0)
     {
         grade = "F";
     }
