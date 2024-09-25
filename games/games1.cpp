@@ -28,7 +28,7 @@ int playGame(int choice) {
         cout << "please enter number to select answer:       1.runs        2.run      3.ran" << endl;
         string answer;
         cin >> answer;
-        if (answer == "1" || "runs") score++;
+        if (answer == "1" || "runs") score++; 
         
         cout << "2) Fill in the blank: He ___ (play) football every day.\n";
         string textAnswer;
