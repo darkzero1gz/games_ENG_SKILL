@@ -25,13 +25,15 @@ int playGame(int choice) {
     if (choice == 1) {
         // Present Simple questions
         cout << "1) What is the correct form of the verb in 'He _ every day." << endl;
-        cout << "please enter number to select answer:       1.runs        2.run      3.ran" << endl;
+        cout << "please enter number to select answer: \n1.runs\n 2.run\n 3.ran" << endl;
         string answer;
+        cout << "Your answer: ";
         cin >> answer;
         if (answer == "1" || "runs") score++; 
         
         cout << "2) Fill in the blank: He ___ (play) football every day.\n";
         string textAnswer;
+        cout << "Your answer: ";
         cin >> textAnswer;
         if (textAnswer == "plays") score++;
     }
@@ -39,11 +41,13 @@ int playGame(int choice) {
         // Past Simple questions
         cout << "1) What is the past form of 'go'?\n1. goes\n2. went\n3. gone\n";
         int answer;
+        cout << "Your answer: ";
         cin >> answer;
         if (answer == 2) score++;
         
         cout << "2) Fill in the blank: He ___ (go) to the park yesterday.\n";
         string textAnswer;
+        cout << "Your answer: ";
         cin >> textAnswer;
         if (textAnswer == "went") score++;
     }
@@ -51,11 +55,13 @@ int playGame(int choice) {
         // Future Simple questions
         cout << "1) Which one is Future Simple?\n1. will go\n2. goes\n3. went\n";
         int answer;
+        cout << "Your answer: ";
         cin >> answer;
         if (answer == 1) score++;
         
         cout << "2) Fill in the blank: He ___ (go) to the park tomorrow.\n";
         string textAnswer;
+        cout << "Your answer: ";
         cin >> textAnswer;
         if (textAnswer == "will go") score++;
     }
