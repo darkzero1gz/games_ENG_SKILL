@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 #include <limits> // สำหรับใช้ numeric_limits
+#include <algorithm> // สำหรับ std::swap
 using namespace std;
 
 const int MAX_SCORES = 10; // จำนวนสูงสุดของคะแนนที่เก็บ
@@ -24,6 +25,10 @@ string getModeName(int choice) {
     if (choice == 1) return "Present Simple";
     if (choice == 2) return "Past Simple";
     if (choice == 3) return "Future Simple";
+<<<<<<< HEAD
+    return "";
+=======
+>>>>>>> f0ca61794710480f92be0290d2d0bf9c77ff90cc
 }
 
 int playGame(int choice) {
@@ -31,7 +36,11 @@ int playGame(int choice) {
     if (choice == 1) {
         // Present Simple questions
         cout << "1) What is the correct form of the verb in 'He _ every day." << endl;
+<<<<<<< HEAD
+        cout << "Please enter number to select answer:\n1. runs\n2. run\n3. ran" << endl;
+=======
         cout << "please enter number to select answer:\n1.runs\n2.run\n3.ran" << endl;
+>>>>>>> f0ca61794710480f92be0290d2d0bf9c77ff90cc
         string answer;
         cout << "Your answer: ";
         cin >> answer;
@@ -127,7 +136,9 @@ void updateHighScores(string playerName, int score, double timeTaken, string mod
 void sortScores() {
     for (int i = 0; i < totalScores - 1; i++) {
         for (int j = 0; j < totalScores - i - 1; j++) {
-            if (highScores[j] < highScores[j + 1]) {
+            // Sort by highScores (descending) and times (ascending)
+            if (highScores[j] < highScores[j + 1] || 
+                (highScores[j] == highScores[j + 1] && times[j] > times[j + 1])) {
                 // Swap scores
                 swap(highScores[j], highScores[j + 1]);
                 // Swap names
@@ -148,7 +159,12 @@ void displayHighScores() {
     sortScores();
     
     for (int i = 0; i < totalScores; i++) {
+<<<<<<< HEAD
+        cout << i + 1 << ". " << players[i] << " (Mode: " << modes[i] << ") - Score: " 
+             << highScores[i] << " - Time: " << times[i] << " seconds\n";
+=======
         cout << i + 1 << ". " << players[i] << " Mode: " << modes[i] << ") - Score: " << highScores[i] << " - Time: " << times[i] << " seconds\n";
+>>>>>>> f0ca61794710480f92be0290d2d0bf9c77ff90cc
     }
     cout << "--------------------\n";
 }
