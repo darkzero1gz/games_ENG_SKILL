@@ -8,10 +8,10 @@ const int MAX_SCORES = 10; // จำนวนสูงสุดของคะ�
 string players[MAX_SCORES]; // เก็บชื่อผู้เล่น
 int highScores[MAX_SCORES] = {0}; // เก็บคะแนนสูงสุด
 double times[MAX_SCORES] = {0}; // เก็บเวลาที่ใช้เล่น
+string modes[MAX_SCORES]; // เก็บโหมดเกมที่เล่น
 int totalScores = 0; // จำนวนของคะแนนที่ถูกเก็บ
 
 void displayMenu() {
-    
     cout << "\n--- English Tense Game ---\n";
     cout << "1. Present Simple\n";
     cout << "2. Past Simple\n";
@@ -20,72 +20,106 @@ void displayMenu() {
     cout << "5. Exit\n";
 }
 
+string getModeName(int choice) {
+    if (choice == 1) return "Present Simple";
+    if (choice == 2) return "Past Simple";
+    if (choice == 3) return "Future Simple";
+}
+
 int playGame(int choice) {
     int score = 0;
     if (choice == 1) {
         // Present Simple questions
         cout << "1) What is the correct form of the verb in 'He _ every day." << endl;
-        cout << "please enter number to select answer: \n1.runs\n 2.run\n 3.ran" << endl;
+        cout << "please enter number to select answer:\n1.runs\n2.run\n3.ran" << endl;
         string answer;
         cout << "Your answer: ";
         cin >> answer;
-        if (answer == "1" || "runs") score++; 
-        
+        if (answer == "1") {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'runs'.\n";
+        }
+
         cout << "2) Fill in the blank: He ___ (play) football every day.\n";
         string textAnswer;
         cout << "Your answer: ";
         cin >> textAnswer;
-        if (textAnswer == "plays") score++;
-    }
+        if (textAnswer == "plays") {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'plays'.\n";
+        }
+    } 
     else if (choice == 2) {
         // Past Simple questions
         cout << "1) What is the past form of 'go'?\n1. goes\n2. went\n3. gone\n";
         int answer;
         cout << "Your answer: ";
         cin >> answer;
-        if (answer == 2) score++;
-        
+        if (answer == 2) {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'went'.\n";
+        }
+
         cout << "2) Fill in the blank: He ___ (go) to the park yesterday.\n";
         string textAnswer;
         cout << "Your answer: ";
         cin >> textAnswer;
-        if (textAnswer == "went") score++;
-    }
+        if (textAnswer == "went") {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'went'.\n";
+        }
+    } 
     else if (choice == 3) {
         // Future Simple questions
         cout << "1) Which one is Future Simple?\n1. will go\n2. goes\n3. went\n";
         int answer;
         cout << "Your answer: ";
         cin >> answer;
-        if (answer == 1) score++;
-        
+        if (answer == 1) {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'will go'.\n";
+        }
+
         cout << "2) Fill in the blank: He ___ (go) to the park tomorrow.\n";
         string textAnswer;
         cout << "Your answer: ";
         cin >> textAnswer;
-        if (textAnswer == "will go") score++;
+        if (textAnswer == "will go") {
+            score++;
+        } else {
+            cout << "Incorrect! The correct answer is 'will go'.\n";
+        }
     }
     return score;
 }
 
-void updateHighScores(string playerName, int score, double timeTaken) {
+void updateHighScores(string playerName, int score, double timeTaken, string mode) {
     if (totalScores < MAX_SCORES) {
         players[totalScores] = playerName;
         highScores[totalScores] = score;
         times[totalScores] = timeTaken;
+        modes[totalScores] = mode;
         totalScores++;
     } else {
-        // Replace lowest score if current score is better
+        // Replace lowest score if current score is better or time is faster
         int minIndex = 0;
         for (int i = 1; i < MAX_SCORES; i++) {
-            if (highScores[i] < highScores[minIndex]) {
+            if (highScores[i] < highScores[minIndex] || 
+                (highScores[i] == highScores[minIndex] && times[i] > times[minIndex])) {
                 minIndex = i;
             }
         }
-        if (score > highScores[minIndex]) {
+        if (score > highScores[minIndex] || 
+            (score == highScores[minIndex] && timeTaken < times[minIndex])) {
             players[minIndex] = playerName;
             highScores[minIndex] = score;
             times[minIndex] = timeTaken;
+            modes[minIndex] = mode;
         }
     }
 }
@@ -100,6 +134,8 @@ void sortScores() {
                 swap(players[j], players[j + 1]);
                 // Swap times
                 swap(times[j], times[j + 1]);
+                // Swap modes
+                swap(modes[j], modes[j + 1]);
             }
         }
     }
@@ -112,7 +148,7 @@ void displayHighScores() {
     sortScores();
     
     for (int i = 0; i < totalScores; i++) {
-        cout << i + 1 << ". " << players[i] << " - Score: " << highScores[i] << " - Time: " << times[i] << " seconds\n";
+        cout << i + 1 << ". " << players[i] << " Mode: " << modes[i] << ") - Score: " << highScores[i] << " - Time: " << times[i] << " seconds\n";
     }
     cout << "--------------------\n";
 }
@@ -125,6 +161,11 @@ bool isNumber(const string& str) {
 }
 
 int main() {
+    // ถามชื่อผู้เล่นใหม่ทุกครั้งเมื่อเลือกโหมดเกม
+    string playerName;
+    cout << "Enter your name: ";
+    cin >> playerName;
+    
     while (true) {
         // แสดงเมนูทุกครั้งก่อนเริ่มเกม
         displayMenu();
@@ -132,12 +173,19 @@ int main() {
         string input;
         int choice = 0;
 
-        cout << "Choose a mode: ";
+        cout << "Choose a mode (1-5): ";
         cin >> input;
 
-        // ดักค่าการกรอกที่ไม่ใช่ตัวเลข
-        if (!isNumber(input) || (choice = stoi(input)) < 1 || choice > 5) {
-            cout << "Invalid input, please enter a number between 1 and 5.\n";
+        // ตรวจสอบว่าค่าที่กรอกเป็นตัวเลขและอยู่ในช่วง 1 ถึง 5
+        if (!isNumber(input)) {
+            cout << "Invalid input. Please enter a number.\n";
+            continue; // กลับไปแสดงเมนูใหม่
+        }
+
+        choice = stoi(input);
+
+        if (choice < 1 || choice > 5) {
+            cout << "Invalid choice. Please select a number between 1 and 5.\n";
             continue;
         }
 
@@ -150,11 +198,6 @@ int main() {
             continue;
         }
     
-        // ถามชื่อผู้เล่นใหม่ทุกครั้งเมื่อเลือกโหมดเกม
-        string playerName;
-        cout << "Enter your name: ";
-        cin >> playerName;
-
         // เริ่มจับเวลา
         clock_t start = clock();
 
@@ -170,7 +213,8 @@ int main() {
         cout << "Time taken: " << timeTaken << " seconds\n";
 
         // อัปเดตคะแนนสูงสุด
-        updateHighScores(playerName, score, timeTaken);
+        string mode = getModeName(choice);
+        updateHighScores(playerName, score, timeTaken, mode);
 
         // ถามผู้เล่นว่าต้องการเล่นต่อหรือไม่
         cout << "Do you want to play again ? (y/n): ";
